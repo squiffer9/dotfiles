@@ -15,6 +15,26 @@ vim.opt.rtp:prepend(lazypath)
 -- Set leader key
 vim.g.mapleader = " "
 
+-- Hide line numbers in terminal mode
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end
+})
+
+-- Option: Show line numbers when leaving terminal mode
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype ~= "terminal" then
+      vim.opt_local.number = true
+      vim.opt_local.relativenumber = true
+    end
+  end
+})
+
 -- Plugin configuration
 require("lazy").setup({
   -- LSP Configuration
