@@ -93,6 +93,19 @@ backup_dir() {
 }
 alias bkpd=backup_dir
 
+# Docker shortcuts
+alias dps='docker ps'
+alias dls='docker container ls'
+alias di='docker images'
+alias dex='docker exec -it'
+alias dcup='docker compose up -d'
+
+# Kubernetes shortcuts
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kgs='kubectl get svc'
+alias kgn='kubectl get nodes'
+
 ################################[ Version Managers ]#########################################
 # pyenv setup
 export PYENV_ROOT="$HOME/.pyenv"
@@ -103,7 +116,7 @@ eval "$(pyenv init --path)"
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
 eval "$(goenv init -)"
-export PATH="$HOME/go/bin:$PATH"  # Go binaries path
+export PATH="$HOME/go/bin:$PATH"
 
 # rbenv setup
 export RBENV_ROOT="$HOME/.rbenv"
@@ -142,3 +155,5 @@ fi
 # Powerlevel10k
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#######################################[ Unorganized ]########################################
