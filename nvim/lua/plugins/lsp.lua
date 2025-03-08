@@ -16,9 +16,9 @@ mason.setup({
     icons = {
       package_installed = "✓",
       package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  }
+      package_uninstalled = "✗",
+    },
+  },
 })
 
 -- Enable Lua language server for Neovim development
@@ -27,20 +27,20 @@ neodev.setup()
 -- Configure available servers
 mason_lspconfig.setup({
   ensure_installed = {
-    "gopls",         -- Go
-    "solargraph",    -- Ruby
-    "pyright",       -- Python
-    "clangd",        -- C/C++
+    "gopls",       -- Go
+    "solargraph",  -- Ruby
+    "pyright",     -- Python
+    "clangd",      -- C/C++
     "rust_analyzer", -- Rust
-    "html",          -- HTML
-    "cssls",         -- CSS
-    "tsserver",      -- TypeScript/JavaScript
-    "yamlls",        -- YAML
-    "jsonls",        -- JSON
-    "lua_ls",        -- Lua
-    "tailwindcss",   -- Tailwind CSS
-    "dockerls",      -- Docker
-    "bashls",        -- Bash
+    "html",        -- HTML
+    "cssls",       -- CSS
+    "ts_ls",       -- TypeScript/JavaScript
+    "yamlls",      -- YAML
+    "jsonls",      -- JSON
+    "lua_ls",      -- Lua
+    "tailwindcss", -- Tailwind CSS
+    "dockerls",    -- Docker
+    "bashls",      -- Bash
   },
   automatic_installation = true,
 })
@@ -89,11 +89,15 @@ local on_attach = function(client, bufnr)
   map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
   map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
   map("n", "gr", vim.lsp.buf.references, "Go to references")
-  map("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, "Format document")
+  map("n", "<leader>f", function()
+    vim.lsp.buf.format({ async = true })
+  end, "Format document")
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
-  map("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, "List workspace folders")
-  
+  map("n", "<leader>wl", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, "List workspace folders")
+
   -- Diagnostics navigation
   map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
   map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
@@ -101,7 +105,7 @@ local on_attach = function(client, bufnr)
   map("n", "<leader>q", vim.diagnostic.setloclist, "Set diagnostics to location list")
 
   -- Disable formatting for certain servers (we'll use null-ls for these)
-  if client.name == "tsserver" or client.name == "gopls" then
+  if client.name == "ts_ls" or client.name == "gopls" then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
   end
@@ -113,9 +117,20 @@ capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 -- Setup each language server
 local servers = {
-  "gopls", "solargraph", "pyright", "clangd", "rust_analyzer",
-  "html", "cssls", "yamlls", "jsonls", "tsserver", "lua_ls",
-  "tailwindcss", "dockerls", "bashls"
+  "gopls",
+  "solargraph",
+  "pyright",
+  "clangd",
+  "rust_analyzer",
+  "html",
+  "cssls",
+  "yamlls",
+  "jsonls",
+  "ts_ls",
+  "lua_ls",
+  "tailwindcss",
+  "dockerls",
+  "bashls",
 }
 
 -- Default server configuration
@@ -181,7 +196,7 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.clang_format,
     null_ls.builtins.formatting.rustfmt,
-    
+
     -- Linters
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.diagnostics.golangci_lint,
